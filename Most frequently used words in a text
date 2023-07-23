@@ -1,0 +1,18 @@
+#Write a function that, given a string of text (possibly with punctuation and line-breaks), returns an array of the top-3 most occurring words, in descending order of the number of occurrences.
+
+def top_3_words(text)
+  text.downcase
+    .delete("#\/.,!")
+    .split
+    .group_by { |w| w }
+    .delete_if { |k,v| k.match?(/^'/) }
+    .transform_values { |values| values.count }
+    .sort_by { |k,v| v }
+    .reverse[0..2]
+    .map { |e| e[0] }
+end
+
+def top_3_words text
+  arr = text.downcase.scan(/\w(?:'|\w)*/)
+  arr.uniq.max_by(3){|w| arr.count w }
+end
